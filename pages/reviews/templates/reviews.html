@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ביקורות
+{% endblock %}
+
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('reviews.static', filename='css/reviews.css') }}"/>
+{% endblock %}
+
+</head>
+{% block body %}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="shortcut icon" href="review_icon.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="file:///E:/fontawesome/css/all.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+{% set page_name = 'ביקורות' %}
+<h1> {{ page_name }}</h1>
+<div class="text">
+    <h2>הוספת דירוג ותגובה:</h2>
+</div>
+<div class="container">
+    <div class="post">
+        <div class="text">תודה על תגובתך!</div>
+        <div class="edit">ערוך</div>
+    </div>
+
+        <form action="/request" method="POST">
+            <div class="star-widget" id="rate">
+                <input type="radio" name="rate" value="5" id="rate-5">
+                <label for="rate-5" class="fas fa-star"></label>
+                <input type="radio" name="rate"  value="4" id="rate-4">
+                <label for="rate-4" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="3" id="rate-3">
+                <label for="rate-3" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="2" id="rate-2">
+                <label for="rate-2" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="1" id="rate-1">
+                <label for="rate-1" class="fas fa-star"></label>
+                <header></header>
+            </div>
+            <div>
+                <label id="lab">שם:</label>
+                <textarea name="inputName" id="inputName"> </textarea>
+            </div>
+            <div class="textarea" id="comment">
+                <textarea name="Comment" id="Comment" cols="30" placeholder="רשום תגובתך..."></textarea>
+            </div>
+            <div class="btn">
+                <input type="submit" value="הגב" />
+            </div>
+        </form>
+
+
+</div>
+
+<section id="testimonials">
+    <div class="testimonial-heading">
+        <h1>לקוחות כותבים</h1>
+    </div>
+    {% if reviews|length == 0 %}
+    <div class="no-found">
+        לא נמצאו תוצאות
+    </div>
+    {% endif%}
+    {% if reviews|length  > 0 %}
+    <div class="testimonial-box-container">
+        {% for review in reviews %}
+        <div class="testimonial-box">
+            <div class="box-top">
+                <div class="profile">
+                    <div class="profile-img">
+                        <img src="/reviews/media/picforreview.png" />
+                    </div>
+                    <div class="name-user">
+                        <strong>{{ review.name }}</strong>
+                    </div>
+                </div>
+                <div class="reviews">
+                    {% for star in range(review.stars_rate) %}
+                    <i class="fas fa-star"></i>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="client-comment">
+                <p>{{ review.comment }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+</section>
+<script src="/reviews/js/reviews.js"></script>
+<script src="http://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
+
+{{ super() }}
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    מוצרים
+{% endblock %}
+
+{% block page_head_css %}
+    <link rel="stylesheet" href="{{ url_for('products.static', filename='css/products.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <script src="/products/js/products.js"></script>
+<h1 >המוצרים שלנו</h1>
+    <div id="GridContainer">
+        {% for p in products %}
+            <div id="product{{loop.index}}" class="Products" style="display: block;background: url(/products/media/{{p.picture}}.jpg) no-repeat;background-size: 100%;"></div>
+            <button id="btn{{loop.index}}" type="button" class="buttons" onclick="hideOrShow('p{{loop.index}}Info', 'product{{loop.index}}')">
+                <b>פרטי המוצר</b>
+            </button>
+            <div id="p{{loop.index}}Info" class="ProductInfo" style="display: none;">
+                <p1 id="header" class="details"><b>{{ p.name }}</b></p1><br><p>
+                <p2 id="description" class="details">{{ p.description }}</p2><p>
+                <p3 id="price" class="details"><b>{{ p.price }}₪</b></p3>
+            </div>
+        {% endfor %}
+
+    </div>
+ {{ super() }}
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
